@@ -1,26 +1,53 @@
-export const securityMetricsConfig = [
+import type { MetricGroupConfig } from "@/types/metrics";
+
+export const metricGroupsConfig: MetricGroupConfig[] = [
   {
-    id: "configuration_from_environment",
-    label: "Configuration from Environment",
-    valueColumn: "Configuration from Environment",
-    commentsColumn: "Configuration from Environment Comments",
+    id: "security",
+    label: "Security",
+    metrics: [
+      { valueColumn: "Configuration from Environment" },
+      { valueColumn: "No sensitive data stored in DB or appearing on logs" },
+      { valueColumn: "Prevention of Web Vulnerabilities" },
+      { valueColumn: "External Audits" },
+    ],
   },
   {
-    id: "no_sensitive_data_stored",
-    label: "No sensitive data stored in DB or appearing on logs",
-    valueColumn: "No sensitive data stored in DB or appearing on logs",
-    commentsColumn: "No sensitive data stored in DB or appearing on logs Comments",
+    id: "architecture",
+    label: "Architecture",
+    metrics: [
+      { valueColumn: "Well Defined Architecture" },
+      { valueColumn: "Usage of Qubika Templates" },
+      { valueColumn: "Usage of UI Components Library" },
+    ],
   },
   {
-    id: "prevention_of_web_vulnerabilities",
-    label: "Prevention of Web Vulnerabilities",
-    valueColumn: "Prevention of Web Vulnerabilities",
-    commentsColumn: "Prevention of Web Vulnerabilities Comments",
+    id: "performance",
+    label: "Performance",
+    metrics: [
+      { valueColumn: "Performance Tests" },
+      { valueColumn: "System Performance Monitoring" },
+      { valueColumn: "Caching Strategy" },
+      { valueColumn: "Database Performance" },
+    ],
   },
   {
-    id: "external_audits",
-    label: "External Audits",
-    valueColumn: "External Audits",
-    commentsColumn: "External Audits Comments",
+    id: "maintainability",
+    label: "Maintainability",
+    metrics: [
+      { valueColumn: "Logging and Tracing" },
+      { valueColumn: "Error Tracking, Monitoring, and Alerts" },
+      { valueColumn: "Unit Tests" },
+      { valueColumn: "E2E Tests" },
+      { valueColumn: "Code Coverage" },
+      { valueColumn: "Documentation" },
+      { valueColumn: "Coding Standards" },
+      { valueColumn: "Automated Env Setup" },
+      { valueColumn: "Technical Debt Status" },
+      { valueColumn: "Dependency Management" },
+      { valueColumn: "Git Flow" },
+      { valueColumn: "Code Reviews" },
+      { valueColumn: "CI Configuration" },
+      { valueColumn: "CD Configuration" },
+    ],
   },
-] as const;
+];

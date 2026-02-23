@@ -21,6 +21,17 @@ export type MetricBatchDefinition = {
   commentsColumn?: string;
 };
 
+export type MetricConfig = {
+  label?: string;
+  valueColumn: string;
+};
+
+export type MetricGroupConfig = {
+  id: string;
+  label: string;
+  metrics: MetricConfig[];
+};
+
 export type MetricGroup = {
   id: string;
   label: string;
