@@ -6,12 +6,20 @@ import type { MetricBatchDefinition, MetricGroup } from "@/types/metrics";
 
 const CSV_PATH = path.join(process.cwd(), "data", "tech_assessments_data.csv");
 
+function metricIdFromValueColumn(valueColumn: string): string {
+  return valueColumn
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
 function buildFallbackGroups(): MetricGroup[] {
   return metricGroupsConfig.map((group) => ({
     id: group.id,
     label: group.label,
     metrics: group.metrics.map((metric) => ({
-      id: metric.id,
+      id: metricIdFromValueColumn(metric.valueColumn),
       label: metric.label,
       clients: [],
     })),
@@ -21,9 +29,9 @@ function buildFallbackGroups(): MetricGroup[] {
 function buildBatchDefinitions(): MetricBatchDefinition[] {
   return metricGroupsConfig.flatMap((group) =>
     group.metrics.map((metric) => ({
-      id: metric.id,
+      id: metricIdFromValueColumn(metric.valueColumn),
       valueColumn: metric.valueColumn,
-      commentsColumn: metric.commentsColumn,
+      commentsColumn: `${metric.valueColumn} Comments`,
     })),
   );
 }
@@ -35,9 +43,9 @@ function buildGroupsFromResults(
     id: group.id,
     label: group.label,
     metrics: group.metrics.map((metric) => ({
-        id: metric.id,
-        label: metric.label,
-      clients: results[metric.id]?.clients ?? [],
+      id: metricIdFromValueColumn(metric.valueColumn),
+      label: metric.label,
+      clients: results[metricIdFromValueColumn(metric.valueColumn)]?.clients ?? [],
     })),
   }));
 }

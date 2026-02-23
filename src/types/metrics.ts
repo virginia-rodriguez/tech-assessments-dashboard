@@ -22,10 +22,8 @@ export type MetricBatchDefinition = {
 };
 
 export type MetricConfig = {
-  id: string;
   label: string;
   valueColumn: string;
-  commentsColumn?: string;
 };
 
 export type MetricGroupConfig = {
