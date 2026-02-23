@@ -1,50 +1,10 @@
-import path from "node:path";
-
 import { SecurityMetricsExplorer } from "@/components/security/security-metrics-explorer";
-import { securityMetricsConfig } from "@/config/metric-groups";
-import { getMetricTrendsBatch } from "@/lib/metrics";
-import type { MetricBatchDefinition, MetricGroup } from "@/types/metrics";
+import { getDashboardData } from "@/lib/dashboard-data";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const csvPath = path.join(process.cwd(), "data", "tech_assessments_data.csv");
-  const fallbackGroups: MetricGroup[] = [
-    {
-      id: "security",
-      label: "Security",
-      metrics: securityMetricsConfig.map((metric) => ({
-        id: metric.id,
-        label: metric.label,
-        clients: [],
-      })),
-    },
-  ];
-
-  let groups: MetricGroup[] = fallbackGroups;
-
-  try {
-    const batchDefinitions: MetricBatchDefinition[] = securityMetricsConfig.map((metric) => ({
-      id: metric.id,
-      valueColumn: metric.valueColumn,
-      commentsColumn: metric.commentsColumn,
-    }));
-    const results = await getMetricTrendsBatch({ metrics: batchDefinitions, csvPath });
-
-    groups = [
-      {
-        id: "security",
-        label: "Security",
-        metrics: securityMetricsConfig.map((metric) => ({
-          id: metric.id,
-          label: metric.label,
-          clients: results[metric.id]?.clients ?? [],
-        })),
-      },
-    ];
-  } catch (error) {
-    console.error("Failed to read CSV data:", error);
-  }
+  const groups = await getDashboardData();
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-sky-50 p-8 md:p-12">
