@@ -8,7 +8,7 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-gradient-to-b from-slate-50 to-sky-50 p-8 md:p-12">
-      <section className="mx-auto max-w-5xl space-y-6">
+      <section className="mx-auto max-w-7xl space-y-6">
         <header className="space-y-2">
           <h1 className="text-3xl font-bold text-slate-900 md:text-4xl">
             Technical Assessments Data Explorer
