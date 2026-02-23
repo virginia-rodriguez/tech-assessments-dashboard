@@ -22,7 +22,7 @@ export type MetricBatchDefinition = {
 };
 
 export type MetricConfig = {
-  label: string;
+  label?: string;
   valueColumn: string;
 };
 

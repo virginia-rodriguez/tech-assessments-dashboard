@@ -14,13 +14,17 @@ function metricIdFromValueColumn(valueColumn: string): string {
     .replace(/^_+|_+$/g, "");
 }
 
+function metricLabelFromConfig(metric: { label?: string; valueColumn: string }): string {
+  return metric.label?.trim() || metric.valueColumn;
+}
+
 function buildFallbackGroups(): MetricGroup[] {
   return metricGroupsConfig.map((group) => ({
     id: group.id,
     label: group.label,
     metrics: group.metrics.map((metric) => ({
       id: metricIdFromValueColumn(metric.valueColumn),
-      label: metric.label,
+      label: metricLabelFromConfig(metric),
       clients: [],
     })),
   }));
@@ -44,7 +48,7 @@ function buildGroupsFromResults(
     label: group.label,
     metrics: group.metrics.map((metric) => ({
       id: metricIdFromValueColumn(metric.valueColumn),
-      label: metric.label,
+      label: metricLabelFromConfig(metric),
       clients: results[metricIdFromValueColumn(metric.valueColumn)]?.clients ?? [],
     })),
   }));
